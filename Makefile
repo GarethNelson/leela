@@ -1,4 +1,4 @@
-CFLAGS = -m64 -DX64 -mcmodel=kernel -mtls-direct-seg-refs -mno-red-zone -Ikernel/include
+CFLAGS = -DX64 -mcmodel=kernel -mtls-direct-seg-refs -mno-red-zone -Ikernel/include -nostdlib -lgcc -ffreestanding -fbuiltin
 CC = x86_64-elf-gcc
 
 KERNEL_OBJS :=\
@@ -31,7 +31,8 @@ KERNEL_OBJS :=\
         build/uart.o\
         build/vectors.o\
         build/vm.o\
-        build/vm64.o
+        build/vm64.o\
+        build/entry64.o
 
 build/%.o: kernel/%.c
 	mkdir -p build
@@ -42,5 +43,6 @@ build/%.o: kernel/%.S
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 build/kernel.elf: $(KERNEL_OBJS)
+	$(CC) -T kernel/kernel64.ld -o $@ $(CFLAGS) $(KERNEL_OBJS)
 
 all: build/kernel.elf
