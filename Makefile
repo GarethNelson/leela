@@ -1,4 +1,5 @@
 CFLAGS = -m64 -DX64 -mcmodel=kernel -mtls-direct-seg-refs -mno-red-zone
+CC = x86_64-elf-gcc
 
 KERNEL_OBJS :=\
         build/bio.o\
