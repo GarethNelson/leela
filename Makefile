@@ -1,4 +1,4 @@
-CFLAGS = -DX64 -mcmodel=kernel -mtls-direct-seg-refs -mno-red-zone -Ikernel/include -nostdlib -lgcc -ffreestanding
+CFLAGS = -DX64 -mcmodel=kernel -mtls-direct-seg-refs -mno-red-zone -Ikernel/include -nostdlib -lgcc -ffreestanding -Wall
 LDFLAGS = -nodefaultlibs
 CC = x86_64-elf-gcc
 LD = x86_64-elf-ld
@@ -51,6 +51,12 @@ build/%.o: kernel/%.c
 build/%.o: kernel/%.S
 	mkdir -p build
 	$(CC) $(CFLAGS) -c -o $@ $<
+
+build/vectors.o: build/vectors.S
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+build/vectors.S: kernel/vectors64.pl
+	$< >$@
 
 build/entryother: build/entryother.o
 	$(OBJCOPY) -S -O binary -j .text build/bootblockother.o build/entryother
