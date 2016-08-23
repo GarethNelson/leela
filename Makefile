@@ -1,4 +1,4 @@
-CFLAGS = -DX64 -mcmodel=kernel -mtls-direct-seg-refs -mno-red-zone -Ikernel/include -nostdlib -lgcc -ffreestanding -fbuiltin
+CFLAGS = -DX64 -mcmodel=kernel -mtls-direct-seg-refs -mno-red-zone -Ikernel/include -nostdlib -lgcc -ffreestanding
 LDFLAGS = -nodefaultlibs
 CC = x86_64-elf-gcc
 LD = x86_64-elf-ld
