@@ -1,0 +1,8 @@
+kernel: UEFI application
+  64-bit xv6 base
+   fix 2GB issue - get memory map dynamically from UEFI
+    look into higher half
+
+swap userland libc for newlib
+
+
