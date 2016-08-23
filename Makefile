@@ -1,4 +1,4 @@
-CFLAGS = -m64 -DX64 -mcmodel=kernel -mtls-direct-seg-refs -mno-red-zone
+CFLAGS = -m64 -DX64 -mcmodel=kernel -mtls-direct-seg-refs -mno-red-zone -Ikernel/include
 CC = x86_64-elf-gcc
 
 KERNEL_OBJS :=\
