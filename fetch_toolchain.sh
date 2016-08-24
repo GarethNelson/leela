@@ -1,5 +1,6 @@
-#!/bin/sh
-wget http://newos.org/toolchains/x86_64-elf-4.9.1-Linux-x86_64.tar.xz
-tar xvf x86_64-elf-4.9.1-Linux-x86_64.tar.xz
-
+#!/bin/bash
+mkdir -p toolchain
+pushd toolchains
+./doit -a x86_64 -o `realpath ../toolchain` -f -c -j`nproc --all`
+popd
 

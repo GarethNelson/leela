@@ -1,0 +1,5 @@
+Basic build+test infrastructure
+ext2/3/4 filesystem
+Userland newlib
+VFS
+ Mount root filesystem at /

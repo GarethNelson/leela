@@ -1,4 +1,4 @@
 #!/bin/sh
-export PATH=$PWD/x86_64-elf-4.9.1-Linux-x86_64/bin/:$PATH
+export PATH=$PWD/toolchain/x86_64-elf-5.3.0-Linux-x86_64/bin/:$PATH
 make all
 
