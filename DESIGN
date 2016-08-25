@@ -3,8 +3,14 @@ driver model
    drivers register themselves with the kernel
     major - points to the driver
     minor - points to the specific driver instance (1 per device)
+driver/device types
+   character  - as per the normal *nix meaning
+   block      - ditto
+   filesystem - for connecting filesystems
 VFS layer
    prefix table mapping strings to major+minor
    /dev maps to devfs
+   / maps to root filesystem
 devfs
-   drivers may register with devfs to provide a device node
+   drivers may register with devfs to provide a device node in /dev
+
