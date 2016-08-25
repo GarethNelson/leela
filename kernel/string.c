@@ -1,6 +1,7 @@
 #include "types.h"
 #include "x86.h"
 
+/*
 void*
 memset(void *dst, int c, uint n)
 {
@@ -77,7 +78,7 @@ strncpy(char *s, const char *t, int n)
     *s++ = 0;
   return os;
 }
-
+*/
 // Like strncpy but guaranteed to NUL-terminate.
 char*
 safestrcpy(char *s, const char *t, int n)
@@ -92,7 +93,7 @@ safestrcpy(char *s, const char *t, int n)
   *s = 0;
   return os;
 }
-
+/*
 int
 strlen(const char *s)
 {
@@ -102,4 +103,4 @@ strlen(const char *s)
     ;
   return n;
 }
-
+*/

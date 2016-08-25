@@ -6,7 +6,7 @@ echo Building newlib for kernel
 mkdir -p newlib/build
 mkdir -p build/sysroot
 pushd newlib/build
-.././configure --target=x86_64-elf-xv6 --prefix=/usr CC_FOR_TARGET=x86_64-elf-gcc AS_FOR_TARGET=x86_64-elf-gcc LD_FOR_TARGET=x86_64-elf-ld AR_FOR_TARGET=x86_64-elf-ar RANLIB_FOR_TARGET=x86_64-elf-ranlib
+CFLAGS="-fPIC -mcmodel=large" .././configure --target=x86_64-elf-xv6 --prefix=/usr CC_FOR_TARGET=x86_64-elf-gcc AS_FOR_TARGET=x86_64-elf-gcc LD_FOR_TARGET=x86_64-elf-ld AR_FOR_TARGET=x86_64-elf-ar RANLIB_FOR_TARGET=x86_64-elf-ranlib CFLAGS="-fPIC -mcmodel=large"
 make all
 make DESTDIR=`realpath ../../build/sysroot` install
 popd

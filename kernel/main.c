@@ -6,6 +6,7 @@
 #include "proc.h"
 #include "x86.h"
 
+#include <stdio.h>
 static void startothers(void);
 static void mpmain(void)  __attribute__((noreturn));
 extern pde_t *kpgdir;
@@ -24,6 +25,7 @@ main(void)
     mpinit();      // otherwise use bios MP tables
   lapicinit();
   seginit();       // set up segments
+ 
   cprintf("\ncpu%d: starting xv6\n\n", cpu->id);
   picinit();       // interrupt controller
   ioapicinit();    // another interrupt controller

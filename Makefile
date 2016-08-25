@@ -1,4 +1,4 @@
-CFLAGS = -DX64  -mtls-direct-seg-refs -mno-red-zone -Ikernel/include -nostdlib -lgcc -ffreestanding -Wall -fPIC
+CFLAGS = -DX64 -mcmodel=large -mtls-direct-seg-refs -mno-red-zone -Ikernel/include -Ibuild/sysroot/usr/include -nostdlib -lgcc -ffreestanding -Wall -fPIC
 LDFLAGS = -nodefaultlibs
 CC = x86_64-elf-gcc
 LD = x86_64-elf-ld
@@ -27,7 +27,10 @@ KERNEL_OBJS :=\
         build/uart.o\
         build/vectors.o\
         build/vm.o\
-        build/vm64.o
+        build/vm64.o\
+	build/sysroot/usr/lib/no-red-zone/libc.a\
+	build/sysroot/usr/lib/no-red-zone/libg.a\
+	build/sysroot/usr/lib/no-red-zone/libnosys.a
 
 build/entryother.o: kernel/entryother.S
 	$(CC) $(CFLAGS) -fno-pic -nostdinc -Ikernel/include -o $@ -c $<
