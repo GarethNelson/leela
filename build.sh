@@ -8,10 +8,10 @@ mkdir -p build/sysroot
 pushd newlib/build
 .././configure --target=x86_64-elf-xv6 --prefix=/usr CC_FOR_TARGET=x86_64-elf-gcc AS_FOR_TARGET=x86_64-elf-gcc LD_FOR_TARGET=x86_64-elf-ld AR_FOR_TARGET=x86_64-elf-ar RANLIB_FOR_TARGET=x86_64-elf-ranlib
 make all
-make DESTDIR=`realpath ../build/sysroot` install
+make DESTDIR=`realpath ../../build/sysroot` install
 popd
 
-
+cp -ar build/sysroot/usr/x86_64-elf-xv6/* build/sysroot/usr/
 
 echo Building xv6 kernel
 make all
