@@ -9,8 +9,6 @@
 #include "param.h"
 #include "traps.h"
 #include "spinlock.h"
-#include "fs.h"
-#include "file.h"
 #include "memlayout.h"
 #include "mmu.h"
 #include "proc.h"
@@ -246,14 +244,14 @@ consoleread(struct inode *ip, char *dst, int n)
   uint target;
   int c;
 
-  iunlock(ip);
+//  iunlock(ip);
   target = n;
   acquire(&input.lock);
   while(n > 0){
     while(input.r == input.w){
       if(proc->killed){
         release(&input.lock);
-        ilock(ip);
+//        ilock(ip);
         return -1;
       }
       sleep(&input.r, &input.lock);
@@ -273,7 +271,7 @@ consoleread(struct inode *ip, char *dst, int n)
       break;
   }
   release(&input.lock);
-  ilock(ip);
+//  ilock(ip);
 
   return target - n;
 }
@@ -283,12 +281,12 @@ consolewrite(struct inode *ip, char *buf, int n)
 {
   int i;
 
-  iunlock(ip);
+//  iunlock(ip);
   acquire(&cons.lock);
   for(i = 0; i < n; i++)
     consputc(buf[i] & 0xff);
   release(&cons.lock);
-  ilock(ip);
+//  ilock(ip);
 
   return n;
 }
@@ -299,8 +297,8 @@ consoleinit(void)
   initlock(&cons.lock, "console");
   initlock(&input.lock, "input");
 
-  devsw[CONSOLE].write = consolewrite;
-  devsw[CONSOLE].read = consoleread;
+//  devsw[CONSOLE].write = consolewrite;
+//  devsw[CONSOLE].read = consoleread;
   cons.locking = 1;
 
   picenable(IRQ_KBD);

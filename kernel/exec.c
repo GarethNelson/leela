@@ -10,7 +10,7 @@
 int
 exec(char *path, char **argv)
 {
-  char *s, *last;
+/*  char *s, *last;
   int i, off;
   uintp argc, sz, sp, ustack[3+MAXARG+1];
   struct elfhdr elf;
@@ -102,5 +102,5 @@ exec(char *path, char **argv)
     freevm(pgdir);
   if(ip)
     iunlockput(ip);
-  return -1;
+  return -1;*/
 }

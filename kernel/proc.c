@@ -99,7 +99,7 @@ userinit(void)
   p->tf->eip = 0;  // beginning of initcode.S
 
   safestrcpy(p->name, "initcode", sizeof(p->name));
-  p->cwd = namei("/");
+//  p->cwd = namei("/");
 
   p->state = RUNNABLE;
 }
@@ -151,10 +151,10 @@ fork(void)
   // Clear %eax so that fork returns 0 in the child.
   np->tf->eax = 0;
 
-  for(i = 0; i < NOFILE; i++)
-    if(proc->ofile[i])
-      np->ofile[i] = filedup(proc->ofile[i]);
-  np->cwd = idup(proc->cwd);
+//  for(i = 0; i < NOFILE; i++)
+//    if(proc->ofile[i])
+//      np->ofile[i] = filedup(proc->ofile[i]);
+//  np->cwd = idup(proc->cwd);
  
   pid = np->pid;
   np->state = RUNNABLE;
@@ -177,12 +177,12 @@ exit(void)
   // Close all open files.
   for(fd = 0; fd < NOFILE; fd++){
     if(proc->ofile[fd]){
-      fileclose(proc->ofile[fd]);
+//      fileclose(proc->ofile[fd]);
       proc->ofile[fd] = 0;
     }
   }
 
-  iput(proc->cwd);
+ // iput(proc->cwd);
   proc->cwd = 0;
 
   acquire(&ptable.lock);
@@ -338,7 +338,7 @@ forkret(void)
     // of a regular process (e.g., they call sleep), and thus cannot 
     // be run from main().
     first = 0;
-    initlog();
+//    initlog();
   }
   
   // Return to "caller", actually trapret (see allocproc).

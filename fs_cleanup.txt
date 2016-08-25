@@ -1,0 +1,17 @@
+From git, these are the files that will need to be replaced/reimplemented:
+
+	deleted:    kernel/bio.c
+	modified:   kernel/console.c
+	modified:   kernel/exec.c
+	deleted:    kernel/file.c
+	deleted:    kernel/fs.c
+	deleted:    kernel/ide.c
+	deleted:    kernel/log.c
+	modified:   kernel/main.c
+	deleted:    kernel/pipe.c
+	modified:   kernel/proc.c
+	modified:   kernel/syscall.c
+	deleted:    kernel/sysfile.c
+	modified:   kernel/trap.c
+	modified:   kernel/vm.c
+
