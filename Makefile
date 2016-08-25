@@ -3,6 +3,7 @@ LDFLAGS = -nodefaultlibs
 CC = x86_64-elf-gcc
 LD = x86_64-elf-ld
 OBJCOPY = x86_64-elf-objcopy
+OBJDUMP = x86_64-elf-objdump
 
 KERNEL_OBJS :=\
         build/console.o\
@@ -29,7 +30,7 @@ KERNEL_OBJS :=\
         build/vm.o\
         build/vm64.o\
 	build/sysroot/usr/lib/no-red-zone/libc.a\
-	build/sysroot/usr/lib/no-red-zone/libg.a\
+	build/sysroot/usr/lib/no-red-zone/libm.a\
 	build/sysroot/usr/lib/no-red-zone/libnosys.a
 
 build/entryother.o: kernel/entryother.S
@@ -62,5 +63,7 @@ build/initcode: build/initcode.o
 
 build/kernel.elf: $(KERNEL_OBJS) build/entry64.o build/entryother build/initcode
 	$(LD) $(LDFLAGS) -T kernel/kernel64.ld -o $@ build/entry64.o $(KERNEL_OBJS) -b binary build/entryother build/initcode
+	$(OBJDUMP) -t build/kernel.elf | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$$/d' > build/kernel.sym
+	
 
 all: build/kernel.elf

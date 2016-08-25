@@ -33,20 +33,9 @@ int lseek(int file, int ptr, int dir) {}
 int open(const char *name, int flags, ...);
 int read(int file, char *ptr, int len) {}
 
-unsigned char sbrk_heap[65536];
-void* sbrk_ptr=NULL;
-void* sbrk_base=NULL;
-uint64_t sbrk_offs=0;
+void* kalloc();
 caddr_t sbrk(int incr) {
-    if(sbrk_ptr==NULL) sbrk_ptr = sbrk_base = (void*)sbrk_heap;
-    if((sbrk_offs+incr) > 65535) {
-       errno = ENOMEM;
-       return (caddr_t)-1;
-    }
-    caddr_t old_sbrk = (caddr_t)sbrk_ptr;
-    sbrk_ptr += incr;
-    sbrk_offs += incr;
-    return old_sbrk;
+    return (caddr_t)kalloc();
 }
 int stat(const char *file, struct stat *st) {
     if(file <= 2) {
@@ -60,13 +49,12 @@ int stat(const char *file, struct stat *st) {
 clock_t times(struct tms *buf);
 int unlink(char *name);
 int wait(int *status);
-extern void cgaputc(int c);
-extern void uartputc(int c);
+
+int
+consolewrite(void *ip, char *buf, int n);
+
 int write(int file, char *ptr, int len) {
-    if(file != 1) return 0;
-    int i=0;
-    for(i=0; i++; i<len) {
-        uartputc(ptr[i]);
-        cgaputc(ptr[i]);
-    }
+//    if(file != 1) return 0;
+    consolewrite(NULL,ptr,len);
+    return len;
 }

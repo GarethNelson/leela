@@ -11,6 +11,7 @@ static void startothers(void);
 static void mpmain(void)  __attribute__((noreturn));
 extern pde_t *kpgdir;
 extern char end[]; // first address after kernel loaded from ELF file
+int write(int file, char *ptr, int len);
 
 // Bootstrap processor starts running C code here.
 // Allocate a real stack and switch to it, first
@@ -26,7 +27,6 @@ main(void)
   lapicinit();
   seginit();       // set up segments
  
-  cprintf("\ncpu%d: starting xv6\n\n", cpu->id);
   picinit();       // interrupt controller
   ioapicinit();    // another interrupt controller
   consoleinit();   // I/O devices & their interrupts
