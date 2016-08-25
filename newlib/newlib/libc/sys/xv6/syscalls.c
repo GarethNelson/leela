@@ -6,6 +6,7 @@
 #include <sys/time.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <stdarg.h>
  
 void _exit();
 int close(int file) {}
@@ -33,10 +34,36 @@ int lseek(int file, int ptr, int dir) {}
 int open(const char *name, int flags, ...);
 int read(int file, char *ptr, int len) {}
 
-void* kalloc();
-caddr_t sbrk(int incr) {
-    return (caddr_t)kalloc();
+void* sbrk_ptr=NULL;
+void* sbrk_base=NULL;
+uint64_t sbrk_offs=0;
+unsigned char sbrk_heap[65536];
+caddr_t sbrk(int incr) { 
+    if(sbrk_ptr==NULL) sbrk_ptr = sbrk_base = (void*)sbrk_heap;
+    if((sbrk_offs+incr) > 65535) {
+      errno = ENOMEM;
+      return (caddr_t)-1;
+    }
+    caddr_t old_sbrk = (caddr_t)sbrk_ptr;
+    sbrk_ptr += incr;
+    sbrk_offs += incr;
+    return old_sbrk;
+//    errno = ENOSYS;
+//    return (caddr_t)-1;
 }
+
+extern void* kalloc();
+void* malloc(size_t size) {
+      if(size <= 4096) return kalloc();
+      errno = ENOMEM;
+      return NULL;
+}
+
+extern void kfree(void* ptr);
+void free(void* ptr) {
+      kfree(ptr);
+}
+
 int stat(const char *file, struct stat *st) {
     if(file <= 2) {
        st->st_mode    = S_IFCHR;
@@ -53,8 +80,15 @@ int wait(int *status);
 int
 consolewrite(void *ip, char *buf, int n);
 
+void cprintf(char* fmt, ...);
+int printf(const char *format, ...) {
+    va_list ap;
+    va_start(ap, format);
+     cprintf(format, ap);
+    va_end(ap);
+}
+
 int write(int file, char *ptr, int len) {
-//    if(file != 1) return 0;
     consolewrite(NULL,ptr,len);
     return len;
 }

@@ -37,6 +37,7 @@ _DEFUN(_printf_r, (ptr, fmt),
   return ret;
 }
 
+/*
 #ifndef _REENT_ONLY
 
 int
@@ -53,5 +54,5 @@ _DEFUN(printf, (fmt),
   va_end (ap);
   return ret;
 }
-
-#endif /* ! _REENT_ONLY */
+#endif 
+*/
