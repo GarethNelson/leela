@@ -34,11 +34,6 @@ main(void)
   pinit();         // process table
   tvinit();        // trap vectors
 
-  //binit();         // buffer cache
-  //fileinit();      // file table
-  //iinit();         // inode cache
-  //ideinit();       // disk
-
   if(!ismp)
     timerinit();   // uniprocessor timer
   startothers();   // start other processors
